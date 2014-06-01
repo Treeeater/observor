@@ -11,11 +11,11 @@ var getCallerInfo = function(caller) {
 	var untrustedStack = "";
 	var recordedDomains = [];
 	var excludedPatterns = ['getCallerInfo'];
-	if (entireStack.length>3000) 
+	/*if (entireStack.length>3000) 
 	{
 		entireStack = entireStack.substr(entireStack.length-3000,entireStack.length);		//Assumes the total call stack is less than 3000 characters. avoid the situation when arguments becomes huge and regex operation virtually stalls the browser.  This could very well happen when innerHTML is changed. For example, flickr.com freezes our extension without this LOC.
 		ignored = "; stack trace > 3000 chars.";					//notify the record that this message is not complete.
-	}
+	}*/
 	while (entireStack != "")
 	{
 		//assuming a http or https protocol, which is true >99% of the time.

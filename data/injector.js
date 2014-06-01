@@ -13,10 +13,16 @@ window.addEventListener('message', function(evt){
 	if (evt.data.observerStack != null && evt.data.accessType != null){
 		switch (evt.data.accessType){
 			case "xhr sent":
+			case "link href set":
+			case "object data set":
+			case "source src set":
+			case "form submitted":
+			case "websocket opened":
 				msg = evt.data.accessType + "\nFrom: " + evt.data.observerStack + (evt.data.extra != null ? "To: " + evt.data.extra+"\n" : "\n");
 				break;
 			case "cookie read":
-				msg = evt.data.accessType + "\nFrom: " + evt.data.observerStack
+				msg = evt.data.accessType + "\nFrom: " + evt.data.observerStack;
+				break;
 			default:
 		}
 		self.port.emit("saveToFile",msg);
