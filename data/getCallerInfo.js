@@ -1,7 +1,7 @@
 var trustedDomains = ["0.1"];
 
-var sendMsg = function(msg, accessType){
-	window.postMessage({observerStack:msg, accessType:accessType}, '*');
+var sendMsg = function(msg, accessType, additionalInfo){
+	window.postMessage({observerStack:msg, accessType:accessType, extra:additionalInfo}, '*');
 }
 
 var getCallerInfo = function(caller) {

@@ -85,7 +85,7 @@ if (old_cookie_getter)
 {
 	newCookieGetter = function(){
 		//console.log(getCallerInfo());
-		sendMsg(getCallerInfo(),"Cookie read.");
+		sendMsg(getCallerInfo(),"cookie read");
 		return old_cookie_getter.apply(this);
 	};
 }

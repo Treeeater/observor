@@ -6,9 +6,20 @@ for (i = 0; i < self.options.urls.length; i++){
 	document.documentElement.appendChild(script);
 }
 
+//there's a timing issue here. although injector.js is executed before everything, the script element it injects are not necessarily.  If the host page contains an inline script at the beginning, that script is likely to execute first.
+
 window.addEventListener('message', function(evt){
+	var msg = "";
 	if (evt.data.observerStack != null && evt.data.accessType != null){
-		self.port.emit("saveToFile",evt.data.accessType + "\n" + evt.data.observerStack);
+		switch (evt.data.accessType){
+			case "xhr sent":
+				msg = evt.data.accessType + "\nFrom: " + evt.data.observerStack + (evt.data.extra != null ? "To: " + evt.data.extra+"\n" : "\n");
+				break;
+			case "cookie read":
+				msg = evt.data.accessType + "\nFrom: " + evt.data.observerStack
+			default:
+		}
+		self.port.emit("saveToFile",msg);
 		//console.log(evt.data.observerData);
 		//console.log(evt.origin);
 	}
