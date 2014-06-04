@@ -21,6 +21,9 @@ window.addEventListener('message', function(evt){
 				msg = evt.data.accessType + "\nFrom: " + evt.data.observerStack + (evt.data.extra != null ? "To: " + evt.data.extra+"\n" : "\n");
 				break;
 			case "cookie read":
+			case "indexedDB accessed":
+			case "localStorage read":
+			case "localStorage set":
 				msg = evt.data.accessType + "\nFrom: " + evt.data.observerStack;
 				break;
 			default:

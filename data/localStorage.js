@@ -78,7 +78,7 @@ if (old_Attr_Value_Setter)
 Attr.prototype.__defineSetter__("value",new_Attr_Value_Setter);
 */
 
-
+//cookie
 var old_cookie_getter = HTMLDocument.prototype.__lookupGetter__('cookie');
 
 if (old_cookie_getter)
@@ -92,3 +92,28 @@ if (old_cookie_getter)
 
 HTMLDocument.prototype.__defineGetter__("cookie",newCookieGetter);
 
+//indexedDB
+oriindexedDBOpen = indexedDB.open;
+
+var newIndexedDBOpen = function(){
+	sendMsg(getCallerInfo(), "indexedDB accessed");
+	oriindexedDBOpen.apply(this, arguments);
+}
+
+indexedDB.open = newIndexedDBOpen;
+
+//localStorage
+//localStorage is immutable in Gecko or Webkit...
+
+var handler = {
+    get: function(target, name){
+		sendMsg(getCallerInfo(), "localStorage read");
+        return target[name];
+    },
+	set: function(obj, prop, newval) {
+		sendMsg(getCallerInfo(), "localStorage set");
+        obj[prop] = newval;
+	}
+};
+
+var p = new Proxy(localStorage, handler);
